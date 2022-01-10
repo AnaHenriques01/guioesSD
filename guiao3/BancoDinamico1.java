@@ -54,8 +54,9 @@ class Bank {
 
         c.lock.lock();
         lock.unlock();                        // assim garantimos que, até fazermos o lock da conta, mais nenhuma thread pode aceder ao banco
-        return c.balance();
+        int balance = c.balance();
         c.lock.unlock();
+        return balance;
     }
 
     // account balance; 0 if no such account
@@ -69,8 +70,9 @@ class Bank {
 
         c.lock.lock();
         lock.unlock;                        // assim garantimos que, até fazermos o lock da conta, mais nenhuma thread pode aceder ao banco
-        return c.balance();
+        int balance = c.balance();
         c.lock.unlock();
+        return balance;
     }
 
     /*
@@ -93,8 +95,9 @@ class Bank {
 
         c.lock.lock();                 // este lock é para proteger a estrutura da conta
         lock.unlock();                 // já obtive o id da conta, então não preciso mais de aceder aos "dados" do banco (map) -- isto para ser mais rápido
-        return c.deposit(value);
+        boolean deposit = c.deposit(value);
         c.lock.unlock();
+        return deposit;
     }
 
     // withdraw; fails if no such account or insufficient balance
@@ -109,8 +112,9 @@ class Bank {
 
         c.lock.lock();
         lock.unlock();
-        return c.withdraw(value);
+        boolean withdraw = c.withdraw(value);
         c.lock.unlock();
+        return withdraw;
     }
 
     // transfer value between accounts;
@@ -128,9 +132,10 @@ class Bank {
         cfrom.lock.lock();
         cto.lock.lock();
         lock.unlock();
-        return cfrom.withdraw(value) && cto.deposit(value);
+        boolean result = cfrom.withdraw(value) && cto.deposit(value);
         cfrom.lock.unlock();
         cto.lock.unlock();
+        return result;
     }
 
     // sum of balances in set of accounts; 0 if some does not exist
