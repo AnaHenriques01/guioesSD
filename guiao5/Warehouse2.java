@@ -63,8 +63,8 @@ class Warehouse {
         // se eu conseguir sair do primeiro for, então quer dizer que já verifiquei todos os produtos e todos os produtos existem.
         // agora vamos consumir os produtos.
         for ( String item : items )
-                get(item).cond.signalAll();
                 get(item).quantity--;
+                get(item).cond.signalAll();
             }
         }
         lock.unlock();
